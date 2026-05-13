@@ -4,65 +4,6 @@ const { Pool } = require('pg');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Conexión a PostgreSQL usando la variable de entorno DATABASE_URL
-// que Render inyecta automáticamente cuando enlazas la BD al servicio
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
-});
-
-app.get('/', async (req, res) => {
-  try {
-    const result = await pool.query(
-      'SELECT id, nombre, apellidos, email, curso FROM alumnos ORDER BY id'
-    );
-    const alumnos = result.rows;
-
-    res.send(`<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Alumnos - ${process.env.ENTORNO || 'LOCAL'}</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f0f4f8;
-      padding: 2rem;
-    }
-    header {
-      background: #1a202c;
-      color: white;
-      padding: 1.2rem 2rem;
-      border-radius: 10px;
-      margin-bottom: 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header h1 { font-size: 1.4rem; }
-    .badge {
-      background: ${process.env.ENTORNO === 'PRO' ? '#38a169' : '#d69e2e'};
-      color: white;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: bold;
-    }
-    .contador {
-      color: #4a5568;
-      margin-bottom: 1rem;
-      font-size: 0.95rem;
-    }
-    table {
-      width: 100%;
-const express = require('express');
-const { Pool } = require('pg');
-
-const app = express();
-const PORT = process.env.PORT || 3000;
-
 // ─────────────────────────────────────────────
 // CONEXIÓN A POSTGRESQL
 // ─────────────────────────────────────────────
